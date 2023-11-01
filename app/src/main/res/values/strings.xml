@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Navigation</string>
+    <string name="drawer">Drawer</string>
+    <string name="bottom">Bottom</string>
+    <string name="options">Options</string>
+    <string name="tabs">Tabs</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="android_is_hard">Android is HARD</string>
+    <string name="todo">TODO</string>
+    <string name="drawer_1">Drawer 1</string>
+    <string name="drawer_2">Drawer 2</string>
+    <string name="drawer_3">Drawer 3</string>
+    <string name="options_1">Options 1</string>
+    <string name="options_2">Options 2</string>
+    <string name="options_3">Options 3</string>
+    <string name="bottom_3">Bottom 3</string>
+    <string name="bottom_2">Bottom 2</string>
+    <string name="bottom_1">Bottom 1</string>
+    <string name="tab_c">Tab C</string>
+    <string name="tab_b">Tab B</string>
+    <string name="tab_a">Tab A</string>
+</resources>
