@@ -6,7 +6,6 @@ import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.customview.widget.Openable;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -30,17 +29,17 @@ public class MainActivity extends AppCompatActivity {
 
         AppBarConfiguration aBConfig = new AppBarConfiguration.Builder(
                 // Top-level destinations:
-                R.id.drawer1Fragment, R.id.drawer2Fragment
+                R.id.tabbed1Fragment, R.id.drawer2Fragment
         )
-                .setOpenableLayout((Openable) binding.mainLayout)
+                .setOpenableLayout(binding.mainLayout)
                 .build();
 
         navController = ((NavHostFragment) Objects.requireNonNull(getSupportFragmentManager()
-                .findFragmentById(R.id.nav_host_fragment))).getNavController();
+                .findFragmentById(binding.fragmentContainerView.getId()))).getNavController();
 
         NavigationUI.setupWithNavController(binding.toolbar, navController, aBConfig);
         NavigationUI.setupWithNavController(binding.navView, navController);
-        NavigationUI.setupWithNavController(binding.toolbar, navController, aBConfig);
+        NavigationUI.setupWithNavController(binding.bottomNavView, navController);
 
     }
 
