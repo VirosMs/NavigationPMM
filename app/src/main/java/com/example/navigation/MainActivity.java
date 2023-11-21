@@ -1,11 +1,17 @@
 package com.example.navigation;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.customview.widget.Openable;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
+
 import com.example.navigation.databinding.ActivityMainBinding;
+
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -18,32 +24,44 @@ public class MainActivity extends AppCompatActivity {
 
         setSupportActionBar(binding.toolbar);
 
-        binding.actionGotoDrawerActivity.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, DrawerActivity.class));
-            }
-        });
+        AppBarConfiguration aBC = new AppBarConfiguration.Builder(
+                // Top-level destinations:
+                R.id.drawer1Fragment, R.id.drawer2Fragment
+        )
+                .setOpenableLayout((Openable) binding.mainLayout)
+                .build();
 
-        binding.actionGotoBottomActivity.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, BottomActivity.class));
-            }
-        });
 
-        binding.actionGotoOptionsActivity.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, OptionsActivity.class));
-            }
-        });
+        // Drawer1Fragment
+        NavController nav1 = ((NavHostFragment) Objects.requireNonNull(getSupportFragmentManager()
+                .findFragmentById(R.id.nav_draw))).getNavController();
 
-        binding.actionGotoTabbedActivity.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, TabbedActivity.class));
-            }
-        });
+
+        NavigationUI.setupWithNavController(binding.navView, nav1);
+        NavigationUI.setupWithNavController(binding.toolbar, nav1, aBC);
+
+        NavController nav2 = ((NavHostFragment) Objects.requireNonNull(getSupportFragmentManager()
+                .findFragmentById(R.id.nav_bottom))).getNavController();
+
+        NavigationUI.setupWithNavController(binding.navView, nav2);
+        NavigationUI.setupWithNavController(binding.toolbar, nav2);
+
+        NavController nav3 = ((NavHostFragment) Objects.requireNonNull(getSupportFragmentManager()
+                .findFragmentById(R.id.nav_fragment))).getNavController();
+
+        NavigationUI.setupWithNavController(binding.navView, nav3);
+        NavigationUI.setupWithNavController(binding.toolbar, nav3, aBC);
+
+        AppBarConfiguration aBC2 = new AppBarConfiguration.Builder(
+                // Top-level destinations:
+                R.id.options1Fragment, R.id.options2Fragment
+        )
+                .build();
+
+        NavController nav4 = ((NavHostFragment) Objects.requireNonNull(getSupportFragmentManager()
+                .findFragmentById(R.id.nav_host_options))).getNavController();
+
+        NavigationUI.setupWithNavController(binding.navView, nav4);
+        NavigationUI.setupWithNavController(binding.toolbar, nav4, aBC2);
     }
 }
