@@ -1,7 +1,10 @@
 package com.example.navigation;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.customview.widget.Openable;
 import androidx.navigation.NavController;
@@ -16,6 +19,7 @@ import java.util.Objects;
 public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding binding;
+    NavController navController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,44 +28,31 @@ public class MainActivity extends AppCompatActivity {
 
         setSupportActionBar(binding.toolbar);
 
-        AppBarConfiguration aBC = new AppBarConfiguration.Builder(
+        AppBarConfiguration aBConfig = new AppBarConfiguration.Builder(
                 // Top-level destinations:
                 R.id.drawer1Fragment, R.id.drawer2Fragment
         )
                 .setOpenableLayout((Openable) binding.mainLayout)
                 .build();
 
+        navController = ((NavHostFragment) Objects.requireNonNull(getSupportFragmentManager()
+                .findFragmentById(R.id.nav_host_fragment))).getNavController();
 
-        // Drawer1Fragment
-        NavController nav1 = ((NavHostFragment) Objects.requireNonNull(getSupportFragmentManager()
-                .findFragmentById(R.id.nav_draw))).getNavController();
+        NavigationUI.setupWithNavController(binding.toolbar, navController, aBConfig);
+        NavigationUI.setupWithNavController(binding.navView, navController);
+        NavigationUI.setupWithNavController(binding.toolbar, navController, aBConfig);
 
+    }
 
-        NavigationUI.setupWithNavController(binding.navView, nav1);
-        NavigationUI.setupWithNavController(binding.toolbar, nav1, aBC);
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.options_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
 
-        NavController nav2 = ((NavHostFragment) Objects.requireNonNull(getSupportFragmentManager()
-                .findFragmentById(R.id.nav_bottom))).getNavController();
-
-        NavigationUI.setupWithNavController(binding.navView, nav2);
-        NavigationUI.setupWithNavController(binding.toolbar, nav2);
-
-        NavController nav3 = ((NavHostFragment) Objects.requireNonNull(getSupportFragmentManager()
-                .findFragmentById(R.id.nav_fragment))).getNavController();
-
-        NavigationUI.setupWithNavController(binding.navView, nav3);
-        NavigationUI.setupWithNavController(binding.toolbar, nav3, aBC);
-
-        AppBarConfiguration aBC2 = new AppBarConfiguration.Builder(
-                // Top-level destinations:
-                R.id.options1Fragment, R.id.options2Fragment
-        )
-                .build();
-
-        NavController nav4 = ((NavHostFragment) Objects.requireNonNull(getSupportFragmentManager()
-                .findFragmentById(R.id.nav_host_options))).getNavController();
-
-        NavigationUI.setupWithNavController(binding.navView, nav4);
-        NavigationUI.setupWithNavController(binding.toolbar, nav4, aBC2);
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        return NavigationUI.onNavDestinationSelected(item, navController)
+                || super.onOptionsItemSelected(item);
     }
 }
